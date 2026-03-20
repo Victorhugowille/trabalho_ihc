@@ -1,108 +1,131 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experimento IHC - Teste de Preferência</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experimento IHC</title>
 
-        #interface {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
 
-        /* Estilo IDÊNTICO para ambos os botões */
-        .btn-exp {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-            /* Tamanho Padronizado */
-            width: 280px;
-            height: 100px;
-            border-radius: 12px;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+    #interface {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+    }
 
-        .btn-exp:active { transform: scale(0.95); }
+    .btn-exp {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+        text-align: center;
 
-        .btn-title { font-size: 20px; font-weight: bold; text-transform: uppercase; }
-        .btn-subtitle { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+        width: 90%;
+        max-width: 280px;
+        height: 100px;
 
-        /* --- POSICIONAMENTO --- */
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
 
-        /* Botão A: Azul - Meio da Direita */
-        #btnA {
-            position: absolute;
-            right: 50px;
-            top: 55%; /* Um pouco abaixo do meio para dar espaço ao outro */
-            background-color: #007bff;
-        }
+    .btn-exp:active {
+        transform: scale(0.95);
+    }
 
-        /* Botão B: Vermelho - Direita, um pouco para cima */
-        #btnB {
-            position: absolute;
-            right: 50px;
-            top: 25%; /* Posicionado na parte superior direita */
-            background-color: #dc3545;
-        }
+    .btn-title {
+        font-size: 18px;
+        font-weight: bold;
+    }
 
-        /* Tela de Sucesso */
-        #sucesso {
-            display: none;
-            text-align: center;
-        }
-        .check { font-size: 70px; color: #28a745; }
-    </style>
+    .btn-subtitle {
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .azul { background-color: #007bff; }
+    .vermelho { background-color: #dc3545; }
+
+    #sucesso {
+        display: none;
+        text-align: center;
+    }
+
+    .check {
+        font-size: 60px;
+        color: #28a745;
+    }
+</style>
 </head>
+
 <body>
 
-    <div id="interface">
-        <button id="btnB" class="btn-exp" onclick="enviar('B')">
+<div id="interface"></div>
+
+<div id="sucesso">
+    <div class="check">✓</div>
+    <h2>Escolha Registrada!</h2>
+    <p>Obrigado por participar.</p>
+</div>
+
+<script>
+    const inicio = Date.now();
+
+    const FORM_ID = "1FAIpQLSeA-8h7IE_wl4i1lrtlKHdD1Xcj_0mx3IbfDDGjZ3nHhFmmiQ";
+    const ENTRY_ESCOLHA = "1295212732";
+    const ENTRY_TEMPO = "1234567890"; // coloque o ID real do campo tempo
+
+    const opcoes = [
+        { id: "A", classe: "azul", subtitulo: "Teste 1" },
+        { id: "B", classe: "vermelho", subtitulo: "Teste 2" }
+    ];
+
+    // 🔀 Randomiza ordem (importante para experimento)
+    opcoes.sort(() => Math.random() - 0.5);
+
+    const container = document.getElementById("interface");
+
+    opcoes.forEach(op => {
+        const btn = document.createElement("button");
+        btn.className = `btn-exp ${op.classe}`;
+
+        btn.innerHTML = `
             <span class="btn-title">Finalizar Compra</span>
-            <span class="btn-subtitle">Teste 2</span>
-        </button>
+            <span class="btn-subtitle">${op.subtitulo}</span>
+        `;
 
-        <button id="btnA" class="btn-exp" onclick="enviar('A')">
-            <span class="btn-title">Finalizar Compra</span>
-            <span class="btn-subtitle">Teste 1</span>
-        </button>
-    </div>
+        btn.onclick = () => enviar(op.id);
 
-    <div id="sucesso">
-        <div class="check">✓</div>
-        <h2>Escolha Registrada!</h2>
-        <p>Obrigado por participar do experimento.</p>
-    </div>
+        container.appendChild(btn);
+    });
 
-    <script>
-        function enviar(escolha) {
-            const FORM_ID = "1FAIpQLSeA-8h7IE_wl4i1lrtlKHdD1Xcj_0mx3IbfDDGjZ3nHhFmmiQ";
-            const ENTRY_ID = "1295212732";
-            
-            const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?entry.${ENTRY_ID}=${escolha}&submit=Submit`;
+    function enviar(escolha) {
+        const tempo = Date.now() - inicio;
 
-            fetch(url, { mode: 'no-cors' }).then(() => {
-                document.getElementById('interface').style.display = 'none';
-                document.getElementById('sucesso').style.display = 'block';
-            });
-        }
-    </script>
+        const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?entry.${ENTRY_ESCOLHA}=${escolha}&entry.${ENTRY_TEMPO}=${tempo}&submit=Submit`;
+
+        fetch(url, { mode: 'no-cors' }).then(() => {
+            document.getElementById('interface').style.display = 'none';
+            document.getElementById('sucesso').style.display = 'block';
+        });
+    }
+</script>
+
 </body>
 </html>
