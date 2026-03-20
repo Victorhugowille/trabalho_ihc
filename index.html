@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experimento IHC - Psicologia Experimental</title>
+    <style>
+        /* Estilo Minimalista e Direto */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        /* Variável A: O "Foco" (Grande, Azul, Centralizado) */
+        #btnA {
+            padding: 35px 70px;
+            font-size: 26px;
+            font-weight: 800;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #btnA:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        #btnA:active {
+            transform: scale(0.96);
+        }
+
+        /* Variável B: A "Controle" (Pequeno, Cinza, Canto Inferior) */
+        #btnB {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            padding: 12px 24px;
+            font-size: 13px;
+            background-color: #f1f3f4;
+            color: #70757a;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        #btnB:hover {
+            background-color: #e8eaed;
+        }
+
+        /* Tela de Sucesso */
+        #sucesso {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 { color: #202124; font-size: 28px; }
+        p { color: #5f6368; }
+    </style>
+</head>
+<body>
+
+    <div id="interface">
+        <button id="btnA" onclick="enviar('A')">Entrar no Sistema</button>
+        <button id="btnB" onclick="enviar('B')">configurações</button>
+    </div>
+
+    <div id="sucesso">
+        <div style="font-size: 60px; color: #34a853; margin-bottom: 20px;">✓</div>
+        <h1>Dados registrados!</h1>
+        <p>Sua interação foi enviada para análise estatística.</p>
+    </div>
+
+    <script>
+        function enviar(escolha) {
+            const FORM_ID = "1FAIpQLSeA-8h7IE_wl4i1lrtlKHdD1Xcj_0mx3IbfDDGjZ3nHhFmmiQ";
+            const ENTRY_ID = "1295212732"; // ID que você me passou
+            
+            const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?entry.${ENTRY_ID}=${escolha}&submit=Submit`;
+
+            // Envio silencioso via fetch
+            fetch(url, { mode: 'no-cors' })
+                .then(() => {
+                    document.getElementById('interface').style.display = 'none';
+                    document.getElementById('sucesso').style.display = 'block';
+                })
+                .catch(() => {
+                    // Mesmo que dê erro de CORS, o dado costuma chegar no Google.
+                    document.getElementById('interface').style.display = 'none';
+                    document.getElementById('sucesso').style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>
