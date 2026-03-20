@@ -3,161 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experimento de IHC - Teste Experimental A/B</title>
+    <title>Experimento IHC - Teste de Preferência</title>
     <style>
-        /* Configurações Gerais da Tela */
         body {
             margin: 0;
-            padding: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f4f6f9; /* Fundo cinza claro para destaque */
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
         }
 
-        /* Container Principal para Posicionamento Absoluto */
         #interface {
             position: relative;
             width: 100%;
             height: 100%;
         }
 
-        /* Estilo Base dos Botões (Reset e Comuns) */
+        /* Estilo IDÊNTICO para ambos os botões */
         .btn-exp {
             display: flex;
-            flex-direction: column; /* Texto e subtítulo empilhados */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.2s;
             text-align: center;
-            font-family: inherit;
+            /* Tamanho Padronizado */
+            width: 280px;
+            height: 100px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .btn-exp:active {
-            transform: scale(0.96); /* Efeito de clique */
-        }
+        .btn-exp:active { transform: scale(0.95); }
 
-        /* Estilo dos Textos dentro do Botão */
-        .btn-title {
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .btn-title { font-size: 20px; font-weight: bold; text-transform: uppercase; }
+        .btn-subtitle { font-size: 14px; opacity: 0.9; margin-top: 4px; }
 
-        .btn-subtitle {
-            font-weight: 400;
-            margin-top: 4px;
-            opacity: 0.8;
-        }
+        /* --- POSICIONAMENTO --- */
 
-        /* --- CONFIGURAÇÃO DO BOTÃO A (Azul, Grande, Meio-Direita) --- */
+        /* Botão A: Azul - Meio da Direita */
         #btnA {
             position: absolute;
-            right: 80px; /* Afastado da borda direita */
-            top: 50%;    /* Centralizado verticalmente */
-            transform: translateY(-50%); /* Ajuste fino do centro */
-            
-            background-color: #007bff; /* Azul vibrante */
-            color: white;
-            
-            /* Tamanho GRANDE */
-            padding: 35px 70px;
-            border-radius: 18px;
-            box-shadow: 0 8px 25px rgba(0,123,255,0.4); /* Sombra pesada */
+            right: 50px;
+            top: 55%; /* Um pouco abaixo do meio para dar espaço ao outro */
+            background-color: #007bff;
         }
 
-        #btnA:hover {
-            background-color: #0056b3;
-            box-shadow: 0 10px 30px rgba(0,123,255,0.6);
-        }
-
-        #btnA .btn-title { font-size: 26px; }
-        #btnA .btn-subtitle { font-size: 16px; }
-
-
-        /* --- CONFIGURAÇÃO DO BOTÃO B (Vermelho, Médio, Direita-Baixo) --- */
+        /* Botão B: Vermelho - Direita, um pouco para cima */
         #btnB {
             position: absolute;
-            right: 25px;   /* Mais perto da borda */
-            bottom: 25px;  /* No canto inferior */
-            
-            background-color: #dc3545; /* Vermelho alerta */
-            color: white;
-            
-            /* Tamanho MÉDIO */
-            padding: 15px 35px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra leve */
+            right: 50px;
+            top: 25%; /* Posicionado na parte superior direita */
+            background-color: #dc3545;
         }
 
-        #btnB:hover {
-            background-color: #bd2130;
-        }
-
-        #btnB .btn-title { font-size: 16px; }
-        #btnB .btn-subtitle { font-size: 12px; }
-
-
-        /* --- Tela de Sucesso Limpa --- */
+        /* Tela de Sucesso */
         #sucesso {
             display: none;
             text-align: center;
-            animation: fadeIn 0.6s ease;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .check-icon { font-size: 80px; color: #28a745; margin-bottom: 20px; }
-        h1 { color: #333; font-size: 32px; margin: 0; }
-        p { color: #666; font-size: 18px; margin-top: 10px; }
+        .check { font-size: 70px; color: #28a745; }
     </style>
 </head>
 <body>
 
     <div id="interface">
-        <button id="btnA" class="btn-exp" onclick="enviar('A')">
-            <span class="btn-title">Finalizar Compra</span>
-            <span class="btn-subtitle">Teste 1</span>
-        </button>
-
         <button id="btnB" class="btn-exp" onclick="enviar('B')">
             <span class="btn-title">Finalizar Compra</span>
             <span class="btn-subtitle">Teste 2</span>
         </button>
+
+        <button id="btnA" class="btn-exp" onclick="enviar('A')">
+            <span class="btn-title">Finalizar Compra</span>
+            <span class="btn-subtitle">Teste 1</span>
+        </button>
     </div>
 
     <div id="sucesso">
-        <div class="check-icon">✓</div>
-        <h1>Ação Confirmada</h1>
-        <p>Obrigado por colaborar com a pesquisa de IHC.</p>
+        <div class="check">✓</div>
+        <h2>Escolha Registrada!</h2>
+        <p>Obrigado por participar do experimento.</p>
     </div>
 
     <script>
-        // CONFIGURAÇÃO DO GOOGLE FORMS
         function enviar(escolha) {
             const FORM_ID = "1FAIpQLSeA-8h7IE_wl4i1lrtlKHdD1Xcj_0mx3IbfDDGjZ3nHhFmmiQ";
-            const ENTRY_ID = "1295212732"; // Seu ID confirmado
+            const ENTRY_ID = "1295212732";
             
             const url = `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse?entry.${ENTRY_ID}=${escolha}&submit=Submit`;
 
-            // Envio silencioso (Fetch com no-cors)
-            fetch(url, { mode: 'no-cors' })
-                .then(() => finalizar())
-                .catch(() => finalizar()); // Executa mesmo que dê erro de CORS (o dado chega)
-        }
-
-        // Função para trocar de tela
-        function finalizar() {
-            document.getElementById('interface').style.display = 'none';
-            document.getElementById('sucesso').style.display = 'block';
+            fetch(url, { mode: 'no-cors' }).then(() => {
+                document.getElementById('interface').style.display = 'none';
+                document.getElementById('sucesso').style.display = 'block';
+            });
         }
     </script>
 </body>
